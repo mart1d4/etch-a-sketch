@@ -37,6 +37,7 @@ const Main = () => {
         gridItems.forEach((gridItem) => {
             gridItem.style.backgroundColor = 'inherit';
         });
+        color === 'inherit' && handleEraseMode();
     };
 
     return (
