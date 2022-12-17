@@ -1,0 +1,32 @@
+{
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start"
+  },
+  "dependencies": {
+    "@vercel/analytics": "^0.1.6",
+    "framer-motion": "^7.10.1",
+    "next": "^13.0.7",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0"
+  },
+  "name": "etch-a-sketch",
+  "version": "1.0.0",
+  "main": "index.js",
+  "keywords": [
+    "next",
+    "react",
+    "etch-a-sketch",
+    "etch",
+    "sketch",
+    "drawing"
+  ],
+  "author": {
+    "name": "mart1d4",
+    "email": "contact@mart1d4.com",
+    "url": "https://www.mart1d4.com"
+  },
+  "license": "ISC",
+  "description": "Etch a sketch, want to draw something?"
+}

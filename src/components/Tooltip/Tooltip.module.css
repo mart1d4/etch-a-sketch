@@ -1,0 +1,26 @@
+.tooltip {
+    display: block;
+    position: absolute;
+    font-size: 0.70rem;
+    font-weight: 500;
+    background-color: var(--background-secondary);
+    color: var(--foreground-secondary);
+    border-radius: 5px;
+    box-shadow: 0 0 5px 0 rgba(0, 0, 0, 0.2);
+    padding: 0.5rem 0.75rem;
+    letter-spacing: 0.05rem;
+    cursor: auto;
+    word-wrap: break-word;
+    white-space: nowrap;
+    z-index: 1000;
+}
+
+.cursorConsistency {
+    position: absolute;
+}
+
+.arrow {
+    position: absolute;
+    width: 0;
+    height: 0;
+}

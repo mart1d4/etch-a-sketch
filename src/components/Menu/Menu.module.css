@@ -1,0 +1,24 @@
+.menu {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+    border-radius: 100vw;
+    position: absolute;
+    top: 20px;
+    left: 50%;
+    padding: 0.5rem;
+}
+
+.menuEntry {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 100%;
+    background-color: rgb(192, 114, 114);
+    padding: 1rem;
+    cursor: pointer;
+    border: none;
+
+}
