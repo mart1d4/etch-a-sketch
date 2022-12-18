@@ -2,11 +2,30 @@ import styles from './Menu.module.css';
 import icons from '../../assets/icons';
 import { Tooltip } from '../';
 import { motion, AnimatePresence } from 'framer-motion';
-import { useState, useRef } from 'react';
+import { useState, useRef, useEffect } from 'react';
 
 const Menu = ({ functions, color, size, dark }) => {
     const [displayTooltip, setDisplayTooltip] = useState(null);
+    const [displaySizeMenu, setDisplaySizeMenu] = useState(false);
+    const [displayColorMenu, setDisplayColorMenu] = useState(false);
     const tooltips = useRef([]);
+    const sizeButton = useRef(null);
+    const sizeMenu = useRef(null);
+
+    useEffect(() => {
+        const handleOutsideClick = (e) => {
+            if (displaySizeMenu && sizeMenu?.current?.contains(e.target)) return;
+            if (sizeButton?.current?.contains(e.target)) return;
+            setDisplaySizeMenu(false);
+            console.log('size menu closed');
+        }
+
+        document.addEventListener('click', handleOutsideClick);
+
+        return () => {
+            document.removeEventListener('click', handleOutsideClick);
+        }
+    }, []);
 
     const menuEntries = [
         {
@@ -63,10 +82,27 @@ const Menu = ({ functions, color, size, dark }) => {
             >
                 {menuEntries.map((entry, index) => (
                     <button
+                        ref={entry.name === 'Change Size' ? sizeButton : null}
                         key={index}
                         className={styles.menuEntry}
-                        onClick={entry.function}
-                        onMouseEnter={() => setDisplayTooltip(entry.name)}
+                        onClick={
+                            entry.name === 'Change Size'
+                            ? (e) => {
+                                if (sizeMenu?.current?.contains(e.target)) return;
+                                setDisplaySizeMenu(!displaySizeMenu);
+                                setDisplayTooltip(null);
+                            }
+                            : entry.name === 'Change Color'
+                            ? () => {
+                                setDisplayColorMenu(!displayColorMenu);
+                                setDisplayTooltip(null);
+                            }
+                            : entry.function
+                        }
+                        onMouseEnter={(e) => {
+                            if (entry.name === 'Change Size' && displaySizeMenu) return;
+                            setDisplayTooltip(entry.name);
+                        }}
                         onMouseLeave={() => {
                             if (!tooltips?.current[index]?.contains(document.activeElement)) {
                                 setDisplayTooltip(null);
@@ -85,9 +121,45 @@ const Menu = ({ functions, color, size, dark }) => {
                                 distance={'20px'}
                             />
                         </span>
-                    </button>
 
-                    
+                        <AnimatePresence>
+                            {(entry.name === 'Change Size' && displaySizeMenu) && (
+                                <motion.div
+                                    ref={sizeMenu}
+                                    style={{
+                                        boxShadow : dark ? '0 0 10px 0 rgba(0, 0, 0, 0.2)' : 'none',
+                                        border: dark ? '1px solid transparent' : '1px solid rgba(0, 0, 0, 0.2)',
+                                    }}
+                                    className={styles.sizeMenu}
+                                    initial={{
+                                        opacity: 0,
+                                        transform: 'translateX(-50%) scale(0)'
+                                    }}
+                                    animate={{
+                                        opacity: 1,
+                                        transform: 'translateX(-50%) scale(1)'
+                                    }}
+                                    exit={{
+                                        opacity: 0,
+                                        transform: 'translateX(-50%) scale(0)'
+                                    }}
+                                    transition={{
+                                        duration: 0.5,
+                                        ease: 'backInOut'
+                                    }}
+                                >
+                                    <input
+                                        type='range'
+                                        min={4}
+                                        max={64}
+                                        step={4}
+                                        value={size}
+                                        onChange={e => functions.handleSizeChange(e.target.value)}
+                                    />
+                                </motion.div>
+                            )}
+                        </AnimatePresence>
+                    </button>
                 ))}
             </motion.nav>
         </AnimatePresence>

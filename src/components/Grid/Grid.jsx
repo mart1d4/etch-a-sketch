@@ -50,13 +50,13 @@ const Grid = ({ size, color, dark }) => {
                         style={{
                             borderRadius:
                                 index === 0
-                                    ? '5px 0 0 0'
+                                    ? '4px 0 0 0'
                                     : index === size - 1
-                                    ? '0 5px 0 0'
+                                    ? '0 4px 0 0'
                                     : index === size * size - size 
-                                    ? '0 0 0 5px'
+                                    ? '0 0 0 4px'
                                     : index === size * size - 1
-                                    ? '0 0 5px 0'
+                                    ? '0 0 4px 0'
                                     : '0',
                         }}
                     >
