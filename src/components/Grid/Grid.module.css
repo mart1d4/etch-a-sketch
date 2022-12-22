@@ -3,4 +3,5 @@
     width: 500px;
     aspect-ratio: 1;
     border-radius: 5px;
+    background-color: var(--background-secondary);
 }

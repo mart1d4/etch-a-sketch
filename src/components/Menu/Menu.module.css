@@ -2,12 +2,14 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    gap: 1rem;
+    gap: min(1.25vw, 0.75rem);
     border-radius: 100vw;
     position: absolute;
     top: 20px;
     left: 50%;
-    padding: 0.5rem;
+    padding: min(0.75vw, 0.5rem);
+    background-color: var(--background-secondary);
+    z-index: 1000;
 }
 
 .menuEntry {
@@ -16,8 +18,8 @@
     align-items: center;
     justify-content: center;
     border-radius: 100%;
-    background-color: rgb(192, 114, 114);
-    padding: 1rem;
+    background-color: var(--background-primary);
+    padding: min(1.25vw, 1.25rem);
     cursor: pointer;
     border: none;
 }
@@ -32,4 +34,6 @@
     padding: 0.5rem 1rem;
     border-radius: 100vw;
     cursor: default;
+    background-color: var(--background-secondary);
+    z-index: 1000;
 }

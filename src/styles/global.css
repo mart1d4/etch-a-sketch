@@ -4,16 +4,16 @@
     --background-primary: #242933;
     --background-secondary: #2e3440;
     --background-tertiary: #3b4252;
-    --foreground-primary: #eceff4;
-    --foreground-secondary: #e5e9f0;
+    --foreground-primary: #e5e9f0;
+    --foreground-secondary: #eceff4;
     --accent-primary: #5e81ac;
     --accent-primary-opacity: #5e81ac80;
     --accent-secondary: #81a1c1;
 }
 
 :root.light {
-    --background-primary: #eceff4;
-    --background-secondary: #e5e9f0;
+    --background-primary: #e5e9f0;
+    --background-secondary: #eceff4;
     --background-tertiary: #d8dee9;
     --foreground-primary: #2e3440;
     --foreground-secondary: #3b4252;
@@ -27,8 +27,8 @@
         --background-primary: #2e3440;
         --background-secondary: #3b4252;
         --background-tertiary: #434c5e;
-        --foreground-primary: #eceff4;
-        --foreground-secondary: #e5e9f0;
+        --foreground-primary: #e5e9f0;
+    --foreground-secondary: #eceff4;
         --accent-primary: #5e81ac;
         --accent-primary-opacity: #5e81ac80;
         --accent-secondary: #81a1c1;
@@ -37,8 +37,8 @@
 
 @media (prefers-color-scheme: light) {
     :root {
-        --background-primary: #eceff4;
-        --background-secondary: #e5e9f0;
+        --background-primary: #e5e9f0;
+    --background-secondary: #eceff4;
         --background-tertiary: #d8dee9;
         --foreground-primary: #2e3440;
         --foreground-secondary: #3b4252;
@@ -69,6 +69,7 @@ body,
     display: flex;
     align-items: center;
     justify-content: center;
+    overflow: hidden;
     background-color: var(--background-primary);
     color: var(--foreground-primary);
     font-size: 16px;
@@ -76,11 +77,15 @@ body,
     color-scheme: dark light;
 }
 
+.main {
+    position: relative;
+}
+
 svg {
-    width: 24px;
-    height: 24px;
+    width: min(5vw, 24px);
+    aspect-ratio: 1;
     stroke-width: 1.5;
-    stroke: #FFFFFF;
+    stroke: var(--foreground-primary);
     fill: none;
     stroke-linecap: round;
     stroke-linejoin: round;

@@ -17,7 +17,6 @@ const Menu = ({ functions, color, size, dark }) => {
             if (displaySizeMenu && sizeMenu?.current?.contains(e.target)) return;
             if (sizeButton?.current?.contains(e.target)) return;
             setDisplaySizeMenu(false);
-            console.log('size menu closed');
         }
 
         document.addEventListener('click', handleOutsideClick);
@@ -88,12 +87,14 @@ const Menu = ({ functions, color, size, dark }) => {
                         onClick={
                             entry.name === 'Change Size'
                             ? (e) => {
+                                e.stopPropagation();
                                 if (sizeMenu?.current?.contains(e.target)) return;
                                 setDisplaySizeMenu(!displaySizeMenu);
                                 setDisplayTooltip(null);
                             }
                             : entry.name === 'Change Color'
-                            ? () => {
+                            ? (e) => {
+                                e.stopPropagation();
                                 setDisplayColorMenu(!displayColorMenu);
                                 setDisplayTooltip(null);
                             }
@@ -109,7 +110,12 @@ const Menu = ({ functions, color, size, dark }) => {
                             }
                         }}
                     >
-                        {entry.icon}
+                        <svg
+                            xmlns='http://www.w3.org/2000/svg'
+                            viewBox='0 0 24 24'
+                        >
+                            {entry.icon}
+                        </svg>
 
                         <span
                             ref={el => tooltips.current[index] = el}

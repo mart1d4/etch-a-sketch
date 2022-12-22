@@ -1,0 +1,62 @@
+.list {
+    position: absolute;
+    top: 0;
+    left: 20px;
+    width: fit-content;
+    min-width: 300px;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    justify-content: flex-start;
+    list-style: none;
+    z-index: 5000;
+    overflow-y: scroll;
+    padding: 20px 0;
+}
+
+.list::-webkit-scrollbar {
+    width: 0px;
+}
+
+.alert {
+    position: relative;
+    width: 100%;
+    max-width: 400px;
+    margin: 0 0 10px;
+    padding: 15px 30px 15px 15px;
+    border-radius: 3px 3px 3px 3px;
+    background-color: var(--background-secondary);
+    font-size: 14px;
+    line-height: 20px;
+    transition: all 0.2s ease;
+    user-select: none;
+    pointer-events: all;
+}
+
+.bar {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 3px;
+    height: 100%;
+    border-radius: 5px 0 0 5px;
+}
+
+.close {
+    position: absolute;
+    top: 50%;
+    right: 5px;
+    transform: translateY(-50%);
+    padding: 3px;
+    border: none;
+    border-radius: 5px;
+    display: flex;
+    background-color: transparent;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.close:hover {
+    background-color: var(--background-primary);
+}
