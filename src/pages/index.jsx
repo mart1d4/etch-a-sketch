@@ -17,13 +17,14 @@ const Main = () => {
             ...alertList,
             {
                 color: color === 'inherit'
-                    ? colors[colors.length - 2]
+                    ? colors[colors.length - 1]
                     : color,
                 text: color === 'inherit'
                     ? 'Eraser mode enabled'
                     : colors[colors.length - 1] === 'inherit'
                     ? 'Eraser mode disabled'
                     : `Color changed to ${color}`,
+                time: Date.now(),
             },
         ]);
     }, [color]);
@@ -32,7 +33,7 @@ const Main = () => {
         if (!touched) return
         setAlertList((alertList) => [
             ...alertList,
-            { color: '#8FBCBB', text: `Grid size changed to ${size}x${size}` },
+            { color: '#8FBCBB', text: `Grid size changed to ${size}x${size}`, time: Date.now(), },
         ]);
     }, [size]);
 
@@ -40,7 +41,7 @@ const Main = () => {
         if (!touched) return
         setAlertList((alertList) => [
             ...alertList,
-            { color: '#8FBCBB', text: `Theme changed to ${dark ? 'dark' : 'light'}` },
+            { color: '#8FBCBB', text: `Theme changed to ${dark ? 'dark' : 'light'}`, time: Date.now(), },
         ]);
     }, [dark]);
 
@@ -48,6 +49,13 @@ const Main = () => {
         document.body.addEventListener('click', () => {
             setTouched(true);
         });
+
+        const interval = setInterval(() => {
+            const time = Date.now();
+            setAlertList((alertList) => {
+                return alertList.filter((alert) => time - alert.time < 5000);
+            });
+        }, 1000);
 
         if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
             setDark(true);
@@ -61,6 +69,7 @@ const Main = () => {
             document.body.removeEventListener('click', () => {
                 setTouched(true);
             });
+            clearInterval(interval);
         };
     }, []);
 
@@ -100,7 +109,7 @@ const Main = () => {
         if (!touched) return
         setAlertList((alertList) => [
             ...alertList,
-            { color: '#8FBCBB', text: 'Grid cleared' },
+            { color: '#8FBCBB', text: 'Grid cleared', time: Date.now(), },
         ]);
     };
 
