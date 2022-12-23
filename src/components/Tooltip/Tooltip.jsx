@@ -2,7 +2,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import styles from './Tooltip.module.css';
 import { useState, useEffect, useRef } from 'react';
 
-const Tooltip = ({ children, title, position, distance, arrow }) => {
+const Tooltip = ({ children, show, title, position, distance, arrow }) => {
     const [display, setDisplay] = useState(false);
 
     const dist = distance ?? '15px';
@@ -74,7 +74,7 @@ const Tooltip = ({ children, title, position, distance, arrow }) => {
             {children}
 
             <AnimatePresence>
-                {display && (
+                {(display && show) && (
                     <motion.span
                         className={styles.tooltip}
                         style={positions[0]}

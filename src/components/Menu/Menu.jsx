@@ -12,6 +12,25 @@ const Menu = ({ functions, color, colors, size, dark }) => {
     const sizeInput = useRef(null);
     const colorInput = useRef(null);
 
+    useEffect(() => {
+        const handleOutsideClick = (e) => {
+            if (!sizeMenu?.current?.contains(e.target) && displaySizeMenu) {
+                setDisplaySizeMenu(false);
+                console.log(sizeInput.current.value);
+            }
+            if (!colorMenu?.current?.contains(e.target) && displayColorMenu) {
+                setDisplayColorMenu(false);
+                console.log(colorInput.current.value);
+            }
+        };
+
+        document.body.addEventListener('click', handleOutsideClick);
+
+        return () => {
+            document.removeEventListener('click', handleOutsideClick);
+        };
+    }, []);
+
     const menuEntries = [
         {
             name: 'Clear Grid',
@@ -74,6 +93,11 @@ const Menu = ({ functions, color, colors, size, dark }) => {
                             position={'bottom'}
                             title={entry.name}
                             distance={'20px'}
+                            show={entry.name === 'Change Size'
+                                    ? !displaySizeMenu
+                                    : entry.name === 'Change Color'
+                                    ? !displayColorMenu
+                                    : true}
                         >
                             <button
                                 className={styles.menuEntry}
@@ -122,7 +146,7 @@ const Menu = ({ functions, color, colors, size, dark }) => {
                                                 transform: 'translateX(-50%) scale(0)'
                                             }}
                                             transition={{
-                                                duration: 0.5,
+                                                duration: 0.3,
                                                 ease: 'backInOut'
                                             }}
                                         >
@@ -175,13 +199,14 @@ const Menu = ({ functions, color, colors, size, dark }) => {
                                                 transform: 'translateX(-50%) scale(0)'
                                             }}
                                             transition={{
-                                                duration: 0.5,
+                                                duration: 0.3,
                                                 ease: 'backInOut'
                                             }}
                                         >
                                             <input
                                                 ref={colorInput}
                                                 type='color'
+                                                defaultValue={color}
                                             />
 
                                             <button

@@ -47,11 +47,6 @@
     -webkit-tap-highlight-color: transparent;
 }
 
-*::selection {
-    background-color: var(--accent-primary);
-    color: var(--foreground-primary);
-}
-
 html,
 body,
 #__next,
