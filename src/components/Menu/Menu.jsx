@@ -4,27 +4,13 @@ import { Tooltip } from '../';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useState, useRef, useEffect } from 'react';
 
-const Menu = ({ functions, color, size, dark }) => {
-    const [displayTooltip, setDisplayTooltip] = useState(null);
+const Menu = ({ functions, color, colors, size, dark }) => {
     const [displaySizeMenu, setDisplaySizeMenu] = useState(false);
     const [displayColorMenu, setDisplayColorMenu] = useState(false);
-    const tooltips = useRef([]);
-    const sizeButton = useRef(null);
     const sizeMenu = useRef(null);
-
-    useEffect(() => {
-        const handleOutsideClick = (e) => {
-            if (displaySizeMenu && sizeMenu?.current?.contains(e.target)) return;
-            if (sizeButton?.current?.contains(e.target)) return;
-            setDisplaySizeMenu(false);
-        }
-
-        document.addEventListener('click', handleOutsideClick);
-
-        return () => {
-            document.removeEventListener('click', handleOutsideClick);
-        }
-    }, []);
+    const colorMenu = useRef(null);
+    const sizeInput = useRef(null);
+    const colorInput = useRef(null);
 
     const menuEntries = [
         {
@@ -80,92 +66,142 @@ const Menu = ({ functions, color, size, dark }) => {
                 }}
             >
                 {menuEntries.map((entry, index) => (
-                    <button
-                        ref={entry.name === 'Change Size' ? sizeButton : null}
+                    <div
                         key={index}
-                        className={styles.menuEntry}
-                        onClick={
-                            entry.name === 'Change Size'
-                            ? (e) => {
-                                e.stopPropagation();
-                                if (sizeMenu?.current?.contains(e.target)) return;
-                                setDisplaySizeMenu(!displaySizeMenu);
-                                setDisplayTooltip(null);
-                            }
-                            : entry.name === 'Change Color'
-                            ? (e) => {
-                                e.stopPropagation();
-                                setDisplayColorMenu(!displayColorMenu);
-                                setDisplayTooltip(null);
-                            }
-                            : entry.function
-                        }
-                        onMouseEnter={(e) => {
-                            if (entry.name === 'Change Size' && displaySizeMenu) return;
-                            setDisplayTooltip(entry.name);
-                        }}
-                        onMouseLeave={() => {
-                            if (!tooltips?.current[index]?.contains(document.activeElement)) {
-                                setDisplayTooltip(null);
-                            }
-                        }}
+                        className={styles.entry}
                     >
-                        <svg
-                            xmlns='http://www.w3.org/2000/svg'
-                            viewBox='0 0 24 24'
+                        <Tooltip
+                            position={'bottom'}
+                            title={entry.name}
+                            distance={'20px'}
                         >
-                            {entry.icon}
-                        </svg>
-
-                        <span
-                            ref={el => tooltips.current[index] = el}
-                        >
-                            <Tooltip
-                                show={displayTooltip === entry.name}
-                                position={'bottom'}
-                                title={entry.name}
-                                distance={'20px'}
-                            />
-                        </span>
+                            <button
+                                className={styles.menuEntry}
+                                onClick={
+                                    entry.name === 'Change Size'
+                                    ? (e) => {
+                                        if (sizeMenu?.current?.contains(e.target)) return;
+                                        setDisplaySizeMenu(!displaySizeMenu);
+                                    }
+                                    : entry.name === 'Change Color'
+                                    ? (e) => {
+                                        if (colorMenu?.current?.contains(e.target)) return;
+                                        setDisplayColorMenu(!displayColorMenu);
+                                    }
+                                    : entry.function
+                                }
+                            >
+                                <svg
+                                    xmlns='http://www.w3.org/2000/svg'
+                                    viewBox='0 0 24 24'
+                                >
+                                    {entry.icon}
+                                </svg>
+                            </button>
+                        </Tooltip>
 
                         <AnimatePresence>
-                            {(entry.name === 'Change Size' && displaySizeMenu) && (
-                                <motion.div
-                                    ref={sizeMenu}
-                                    style={{
-                                        boxShadow : dark ? '0 0 10px 0 rgba(0, 0, 0, 0.2)' : 'none',
-                                        border: dark ? '1px solid transparent' : '1px solid rgba(0, 0, 0, 0.2)',
-                                    }}
-                                    className={styles.sizeMenu}
-                                    initial={{
-                                        opacity: 0,
-                                        transform: 'translateX(-50%) scale(0)'
-                                    }}
-                                    animate={{
-                                        opacity: 1,
-                                        transform: 'translateX(-50%) scale(1)'
-                                    }}
-                                    exit={{
-                                        opacity: 0,
-                                        transform: 'translateX(-50%) scale(0)'
-                                    }}
-                                    transition={{
-                                        duration: 0.5,
-                                        ease: 'backInOut'
-                                    }}
-                                >
-                                    <input
-                                        type='range'
-                                        min={4}
-                                        max={64}
-                                        step={4}
-                                        value={size}
-                                        onChange={e => functions.handleSizeChange(e.target.value)}
-                                    />
-                                </motion.div>
-                            )}
-                        </AnimatePresence>
-                    </button>
+                                    {(entry.name === 'Change Size' && displaySizeMenu) && (
+                                        <motion.div
+                                            ref={sizeMenu}
+                                            style={{
+                                                boxShadow : dark ? '0 0 10px 0 rgba(0, 0, 0, 0.2)' : 'none',
+                                                border: dark ? '1px solid transparent' : '1px solid rgba(0, 0, 0, 0.2)',
+                                            }}
+                                            className={styles.sizeMenu}
+                                            initial={{
+                                                opacity: 0,
+                                                transform: 'translateX(-50%) scale(0)'
+                                            }}
+                                            animate={{
+                                                opacity: 1,
+                                                transform: 'translateX(-50%) scale(1)'
+                                            }}
+                                            exit={{
+                                                opacity: 0,
+                                                transform: 'translateX(-50%) scale(0)'
+                                            }}
+                                            transition={{
+                                                duration: 0.5,
+                                                ease: 'backInOut'
+                                            }}
+                                        >
+                                            <input
+                                                ref={sizeInput}
+                                                type='range'
+                                                min={4}
+                                                max={64}
+                                                step={4}
+                                                defaultValue={size}
+                                            />
+
+                                            <button
+                                                className={styles.colorMenuButton}
+                                                onClick={() => {
+                                                    functions.handleSizeChange(sizeInput.current.value);
+                                                    setDisplaySizeMenu(false);
+                                                }}
+                                            >
+                                                <svg
+                                                    xmlns='http://www.w3.org/2000/svg'
+                                                    viewBox='0 0 24 24'
+                                                >
+                                                    {icons.check}
+                                                </svg>
+                                            </button>
+                                        </motion.div>
+                                    )}
+                                </AnimatePresence>
+
+                                <AnimatePresence>
+                                    {(entry.name === 'Change Color' && displayColorMenu) && (
+                                        <motion.div
+                                            ref={colorMenu}
+                                            style={{
+                                                boxShadow : dark ? '0 0 10px 0 rgba(0, 0, 0, 0.2)' : 'none',
+                                                border: dark ? '1px solid transparent' : '1px solid rgba(0, 0, 0, 0.2)',
+                                            }}
+                                            className={styles.colorMenu}
+                                            initial={{
+                                                opacity: 0,
+                                                transform: 'translateX(-50%) scale(0)'
+                                            }}
+                                            animate={{
+                                                opacity: 1,
+                                                transform: 'translateX(-50%) scale(1)'
+                                            }}
+                                            exit={{
+                                                opacity: 0,
+                                                transform: 'translateX(-50%) scale(0)'
+                                            }}
+                                            transition={{
+                                                duration: 0.5,
+                                                ease: 'backInOut'
+                                            }}
+                                        >
+                                            <input
+                                                ref={colorInput}
+                                                type='color'
+                                            />
+
+                                            <button
+                                                className={styles.colorMenuButton}
+                                                onClick={() => {
+                                                    functions.handleColorChange(colorInput.current.value);
+                                                    setDisplayColorMenu(false);
+                                                }}
+                                            >
+                                                <svg
+                                                    xmlns='http://www.w3.org/2000/svg'
+                                                    viewBox='0 0 24 24'
+                                                >
+                                                    {icons.check}
+                                                </svg>
+                                            </button>
+                                        </motion.div>
+                                    )}
+                                </AnimatePresence>
+                    </div>
                 ))}
             </motion.nav>
         </AnimatePresence>

@@ -12,6 +12,10 @@
     z-index: 1000;
 }
 
+.entry {
+    position: relative;
+}
+
 .menuEntry {
     position: relative;
     display: flex;
@@ -31,9 +35,65 @@
     display: flex;
     align-items: center;
     justify-content: center;
+    gap: 0.5rem;
     padding: 0.5rem 1rem;
     border-radius: 100vw;
     cursor: default;
     background-color: var(--background-secondary);
     z-index: 1000;
+}
+
+.sizeMenu > input {
+    position: relative;
+    cursor: pointer;
+}
+
+.colorMenu {
+    position: absolute;
+    top: calc(100% + 20px);
+    left: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    padding: 0.5rem 1rem;
+    border-radius: 100vw;
+    cursor: default;
+    background-color: var(--background-secondary);
+    z-index: 1000;
+}
+
+.colorMenu > input {
+    border-radius: 100vw;
+    position: relative;
+    cursor: pointer;
+}
+
+.colorMenu > input::after {
+    content: '';
+    position: absolute;
+    top: -1px;
+    left: -1px;
+    display: block;
+    width: calc(100% + 2px);
+    height: calc(100% + 2px);
+    border-radius: 100vw;
+    background-color: var(--accent-primary);
+    z-index: 10000;
+}
+
+.colorMenuButton {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 100%;
+    background-color: var(--background-primary);
+    padding: 5px;
+    cursor: pointer;
+    border: none;
+}
+
+.colorMenuButton > svg {
+    width: 18px;
+    height: 18px;
 }

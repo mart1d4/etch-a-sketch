@@ -12,6 +12,7 @@ const Main = () => {
 
     useEffect(() => {
         setColors((colors) => [...colors, color]);
+        if (color !== 'inherit') document.documentElement.style.setProperty('--accent-primary', color);
         if (!touched) return
         setAlertList((alertList) => [
             ...alertList,
@@ -130,7 +131,11 @@ const Main = () => {
                 You don't have javascript enabled.  Good luck with that.
             </noscript> */}
 
-            <Alerts alertList={alertList} removeAlert={removeAlert} dark={dark} />
+            <Alerts
+                alertList={alertList}
+                removeAlert={removeAlert}
+                dark={dark}
+            />
 
             <main
                 className={'main'}
@@ -146,6 +151,7 @@ const Main = () => {
                         handleClearGrid,
                     }}
                     color={color}
+                    colors={colors}
                     size={size}
                     dark={dark}
                 />

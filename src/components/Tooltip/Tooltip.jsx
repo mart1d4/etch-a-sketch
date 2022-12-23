@@ -1,7 +1,10 @@
 import { motion, AnimatePresence } from 'framer-motion';
 import styles from './Tooltip.module.css';
+import { useState, useEffect, useRef } from 'react';
 
-const Tooltip = ({ title, show, position, distance, arrow }) => {
+const Tooltip = ({ children, title, position, distance, arrow }) => {
+    const [display, setDisplay] = useState(false);
+
     const dist = distance ?? '15px';
     const pos = position ?? 'top';
     const showArrow = arrow ?? false;
@@ -63,46 +66,54 @@ const Tooltip = ({ title, show, position, distance, arrow }) => {
     const positions = getTooltipPosition();
 
     return (
-        <AnimatePresence>
-            {show && (
-                <motion.span
-                    className={styles.tooltip}
-                    style={positions[0]}
-                    initial={{
-                        opacity: 0,
-                        transform: positions[0].transform + ' scale(0)',
-                    }}
-                    animate={{
-                        opacity: 1,
-                        transform: positions[0].transform + ' scale(1)',
-                    }}
-                    exit={{
-                        opacity: 0,
-                        transform: positions[0].transform + ' scale(0)',
-                    }}
-                    transition={{
-                        duration: 0.15,
-                    }}
-                    onClick={(e) => e.preventDefault()}
-                >
-                    {title}
+        <div
+            className={styles.container}
+            onMouseEnter={() => setDisplay(true)}
+            onMouseLeave={() => setDisplay(false)}
+        >
+            {children}
 
-                    <span
-                        className={styles.cursorConsistency}
-                        style={positions[1]}
+            <AnimatePresence>
+                {display && (
+                    <motion.span
+                        className={styles.tooltip}
+                        style={positions[0]}
+                        initial={{
+                            opacity: 0,
+                            transform: positions[0].transform + ' scale(0)',
+                        }}
+                        animate={{
+                            opacity: 1,
+                            transform: positions[0].transform + ' scale(1)',
+                        }}
+                        exit={{
+                            opacity: 0,
+                            transform: positions[0].transform + ' scale(0)',
+                        }}
+                        transition={{
+                            duration: 0.15,
+                        }}
+                        onClick={(e) => e.preventDefault()}
                     >
-                    </span>
+                        {title}
 
-                    {showArrow && (
                         <span
-                            className={styles.arrow}
-                            style={positions[2]}
+                            className={styles.cursorConsistency}
+                            style={positions[1]}
                         >
                         </span>
-                    )}
-                </motion.span>
-            )}
-        </AnimatePresence>
+
+                        {showArrow && (
+                            <span
+                                className={styles.arrow}
+                                style={positions[2]}
+                            >
+                            </span>
+                        )}
+                    </motion.span>
+                )}
+            </AnimatePresence>
+        </div>
     );
 }
 

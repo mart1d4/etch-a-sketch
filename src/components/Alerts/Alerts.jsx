@@ -33,7 +33,6 @@ const Alerts = ({ alertList, removeAlert, dark }) => {
 
                         <div
                             className={styles.bar}
-                            style={{ backgroundColor: alert.color }}
                         >
                         </div>
 
