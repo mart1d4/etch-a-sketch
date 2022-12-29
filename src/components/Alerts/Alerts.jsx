@@ -13,7 +13,7 @@ const Alerts = ({ alertList, removeAlert, dark }) => {
                         key={index}
                         layout
                         initial={{
-                            scale: 0.8,
+                            scale: 0.5,
                             opacity: 0
                         }}
                         animate={{
@@ -21,11 +21,12 @@ const Alerts = ({ alertList, removeAlert, dark }) => {
                             opacity: 1
                         }}
                         exit={{
-                            scale: 0.8,
+                            scale: 0.5,
                             opacity: 0
                         }}
                         transition={{
-                            type: 'spring',
+                            duration: 0.15,
+                            ease: 'easeInOut'
                         }}
                         className={styles.alert}
                     >

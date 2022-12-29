@@ -4,12 +4,8 @@
     justify-content: center;
     gap: min(1.25vw, 0.75rem);
     border-radius: 100vw;
-    position: absolute;
-    top: 20px;
-    left: 50%;
     padding: min(0.75vw, 0.5rem);
     background-color: var(--background-secondary);
-    z-index: 1000;
 }
 
 .entry {

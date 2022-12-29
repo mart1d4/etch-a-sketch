@@ -4,7 +4,7 @@ import { Tooltip } from '../';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useState, useRef, useEffect } from 'react';
 
-const Menu = ({ functions, color, colors, size, dark }) => {
+const Menu = ({ functions, color, size, dark }) => {
     const [displaySizeMenu, setDisplaySizeMenu] = useState(false);
     const [displayColorMenu, setDisplayColorMenu] = useState(false);
     const sizeMenu = useRef(null);
@@ -14,21 +14,23 @@ const Menu = ({ functions, color, colors, size, dark }) => {
 
     useEffect(() => {
         const handleOutsideClick = (e) => {
-            if (!sizeMenu?.current?.contains(e.target) && displaySizeMenu) {
+            if (
+                displaySizeMenu &&
+                !sizeMenu?.current?.contains(e.target)
+            ) {
                 setDisplaySizeMenu(false);
-                console.log(sizeInput.current.value);
             }
-            if (!colorMenu?.current?.contains(e.target) && displayColorMenu) {
+            if (
+                displayColorMenu &&
+                !colorMenu?.current?.contains(e.target)
+            ) {
                 setDisplayColorMenu(false);
-                console.log(colorInput.current.value);
             }
         };
 
-        document.body.addEventListener('click', handleOutsideClick);
+        document.addEventListener('click', handleOutsideClick);
 
-        return () => {
-            document.removeEventListener('click', handleOutsideClick);
-        };
+        return () => document.removeEventListener('click', handleOutsideClick);
     }, []);
 
     const menuEntries = [
@@ -60,58 +62,33 @@ const Menu = ({ functions, color, colors, size, dark }) => {
     ];
 
     return (
-        <AnimatePresence>
-            <motion.nav
+            <nav
                 className={styles.menu}
                 style={{
                     boxShadow: dark ? '0 0 10px 0 rgba(0, 0, 0, 0.2)' : 'none',
                     border: dark ? '1px solid transparent' : '1px solid rgba(0, 0, 0, 0.2)',
                 }}
-                initial={{
-                    opacity: 0,
-                    transform: 'translateX(-50%) scale(0)'
-                }}
-                animate={{
-                    opacity: 1,
-                    transform: 'translateX(-50%) scale(1)'
-                }}
-                exit={{
-                    opacity: 0,
-                    transform: 'translateX(-50%) scale(0)'
-                }}
-                transition={{
-                    duration: 1,
-                    ease: 'backInOut'
-                }}
             >
                 {menuEntries.map((entry, index) => (
                     <div
-                        key={index}
+                        key={index + entry.name}
                         className={styles.entry}
                     >
                         <Tooltip
-                            position={'bottom'}
-                            title={entry.name}
-                            distance={'20px'}
                             show={entry.name === 'Change Size'
                                     ? !displaySizeMenu
                                     : entry.name === 'Change Color'
                                     ? !displayColorMenu
                                     : true}
+                            text={entry.name}
                         >
                             <button
                                 className={styles.menuEntry}
                                 onClick={
                                     entry.name === 'Change Size'
-                                    ? (e) => {
-                                        if (sizeMenu?.current?.contains(e.target)) return;
-                                        setDisplaySizeMenu(!displaySizeMenu);
-                                    }
+                                    ? () => setDisplaySizeMenu(!displaySizeMenu)
                                     : entry.name === 'Change Color'
-                                    ? (e) => {
-                                        if (colorMenu?.current?.contains(e.target)) return;
-                                        setDisplayColorMenu(!displayColorMenu);
-                                    }
+                                    ? () => setDisplayColorMenu(!displayColorMenu)
                                     : entry.function
                                 }
                             >
@@ -228,8 +205,7 @@ const Menu = ({ functions, color, colors, size, dark }) => {
                                 </AnimatePresence>
                     </div>
                 ))}
-            </motion.nav>
-        </AnimatePresence>
+            </nav>
     );
 }
 

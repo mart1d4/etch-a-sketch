@@ -1,25 +1,26 @@
+import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import styles from './Tooltip.module.css';
-import { useState, useEffect, useRef } from 'react';
 
-const Tooltip = ({ children, show, title, position, distance, arrow }) => {
+const Tooltip = ({ children, show, text, pos, dist, arrow }) => {
     const [display, setDisplay] = useState(false);
 
-    const dist = distance ?? '15px';
-    const pos = position ?? 'top';
+    const showTooltip = show ?? true;
+    const distance = dist ?? '15px';
+    const position = pos ?? 'bottom';
     const showArrow = arrow ?? false;
 
     const getTooltipPosition = () => {
         const objects = [{}, {}, {}];
 
-        if (pos === 'top' || pos === 'bottom') {
-            if (pos === 'top') {
-                objects[0].bottom = `calc(100% + ${dist})`;
+        if (position === 'top' || position === 'bottom') {
+            if (position === 'top') {
+                objects[0].bottom = `calc(100% + ${distance})`;
                 objects[1].top = '100%';
                 objects[2].borderTop = '4px solid var(--background-secondary)';
                 objects[2].bottom = '-4px';
-            } else if (pos === 'bottom') {
-                objects[0].top = `calc(100% + ${dist})`;
+            } else if (position === 'bottom') {
+                objects[0].top = `calc(100% + ${distance})`;
                 objects[1].bottom = '100%';
                 objects[2].borderBottom = '4px solid var(--background-secondary)';
                 objects[2].top = '-4px';
@@ -32,17 +33,17 @@ const Tooltip = ({ children, show, title, position, distance, arrow }) => {
             objects[1].transform = 'translateX(-50%)';
             objects[2].transform = 'translateX(-50%)';
             objects[1].width = '100%';
-            objects[1].height = dist;
+            objects[1].height = distance;
             objects[2].borderLeft = '4px solid transparent';
             objects[2].borderRight = '4px solid transparent';
-        } else if (pos === 'left' || pos === 'right') {
-            if (pos === 'left') {
-                objects[0].right = `calc(100% + ${dist})`;
+        } else if (position === 'left' || position === 'right') {
+            if (position === 'left') {
+                objects[0].right = `calc(100% + ${distance})`;
                 objects[1].left = '100%';
                 objects[2].borderLeft = '4px solid var(--background-secondary)';
                 objects[2].right = '-4px';
-            } else if (pos === 'right') {
-                objects[0].left = `calc(100% + ${dist})`;
+            } else if (position === 'right') {
+                objects[0].left = `calc(100% + ${distance})`;
                 objects[1].right = '100%';
                 objects[2].borderRight = '4px solid var(--background-secondary)';
                 objects[2].left = '-4px';
@@ -54,7 +55,7 @@ const Tooltip = ({ children, show, title, position, distance, arrow }) => {
             objects[0].transform = 'translateY(-50%)';
             objects[1].transform = 'translateY(-50%)';
             objects[2].transform = 'translateY(-50%)';
-            objects[1].width = dist;
+            objects[1].width = distance;
             objects[1].height = '100%';
             objects[2].borderTop = '4px solid transparent';
             objects[2].borderBottom = '4px solid transparent';
@@ -74,7 +75,7 @@ const Tooltip = ({ children, show, title, position, distance, arrow }) => {
             {children}
 
             <AnimatePresence>
-                {(display && show) && (
+                {(display && showTooltip) && (
                     <motion.span
                         className={styles.tooltip}
                         style={positions[0]}
@@ -95,7 +96,7 @@ const Tooltip = ({ children, show, title, position, distance, arrow }) => {
                         }}
                         onClick={(e) => e.preventDefault()}
                     >
-                        {title}
+                        {text}
 
                         <span
                             className={styles.cursorConsistency}
