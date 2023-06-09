@@ -1,12 +1,12 @@
 import Grid from './Grid/Grid';
-import Menu from './Menu/Menu';
+import Actions from './Actions/Actions';
 import Tooltip from './Tooltip/Tooltip';
 import Alerts from './Alerts/Alerts';
 import SubMenu from './SubMenu/SubMenu';
 
 export {
     Grid,
-    Menu,
+    Actions,
     Tooltip,
     Alerts,
     SubMenu

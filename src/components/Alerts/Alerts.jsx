@@ -1,9 +1,9 @@
 import { motion, AnimatePresence } from 'framer-motion';
-import styles from './Alerts.module.css';
+import './Alerts.css';
 
 const Alerts = ({ alertList, removeAlert, dark }) => {
     return (
-        <ul className={styles.list}>
+        <ul className='alertList'>
             <AnimatePresence mode='popLayout'>
                 {alertList.map((alert, index) => (
                     <motion.li
@@ -26,19 +26,16 @@ const Alerts = ({ alertList, removeAlert, dark }) => {
                         }}
                         transition={{
                             duration: 0.15,
-                            ease: 'easeInOut'
+                            ease: 'backInOut'
                         }}
-                        className={styles.alert}
+                        className='alert'
                     >
                         {alert.text}
 
-                        <div
-                            className={styles.bar}
-                        >
-                        </div>
+                        <div className='bar' />
 
                         <button
-                            className={styles.close}
+                            className='close'
                             onClick={() => removeAlert(index)}
                         >
                             <svg
@@ -46,10 +43,6 @@ const Alerts = ({ alertList, removeAlert, dark }) => {
                                 width='24'
                                 height='24'
                                 viewBox='0 0 24 24'
-                                fill='none'
-                                strokeWidth='2'
-                                strokeLinecap='round'
-                                strokeLinejoin='round'
                             >
                                 <line x1='18' y1='6' x2='6' y2='18' />
                                 <line x1='6' y1='6' x2='18' y2='18' />

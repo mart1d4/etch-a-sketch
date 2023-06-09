@@ -1,14 +1,14 @@
 import { motion } from 'framer-motion';
 import { useRef } from 'react';
-import styles from './Settings.module.css';
+import './Settings.css';
 
-const Settings = ({ showMenu, setShowMenu, functions, hover, showBorders, showTooltips }) => {
+const Settings = ({ showMenu, setShowMenu, functions, drawMode, showBorders, showTooltips }) => {
     const menu = useRef(null);
 
     return (
         showMenu && (
             <motion.div
-                className={styles.menuBackground}
+                className='menuBackground'
                 initial={{
                     opacity: 0,
                 }}
@@ -30,7 +30,7 @@ const Settings = ({ showMenu, setShowMenu, functions, hover, showBorders, showTo
                 }}
             >
                 <motion.div
-                    className={styles.menu}
+                    className='menu'
                     ref={menu}
                     initial={{
                         opacity: 0,
@@ -45,10 +45,10 @@ const Settings = ({ showMenu, setShowMenu, functions, hover, showBorders, showTo
                         ease: 'backInOut',
                     }}
                 >
-                    <div className={styles.menuHeader}>
+                    <div className='menuHeader'>
                         <h2>Settings</h2>
                         <button
-                            className={styles.closeButton}
+                            className='closeButton'
                             onClick={() => setShowMenu(false)}
                         >
                             <svg
@@ -61,14 +61,18 @@ const Settings = ({ showMenu, setShowMenu, functions, hover, showBorders, showTo
                         </button>
                     </div>
 
-                    <div className={styles.menuContent}>
+                    <div className='menuContent'>
                         <button
-                            onClick={() => functions.handleHover()}
+                            onClick={() => functions.handleDrawMode(
+                                drawMode === 2 ? 0 : drawMode + 1
+                            )}
                         >
                             {
-                                hover
-                                ? 'Click and drag to draw'
-                                : 'Hover to draw'
+                                drawMode === 0
+                                    ? 'Click and hover to draw'
+                                    : drawMode === 1
+                                        ? 'Click and drag to draw'
+                                        : 'Hover to draw'
                             }
                         </button>
 
@@ -77,8 +81,8 @@ const Settings = ({ showMenu, setShowMenu, functions, hover, showBorders, showTo
                         >
                             {
                                 showBorders
-                                ? 'Hide grid borders'
-                                : 'Show grid borders'
+                                    ? 'Hide grid borders'
+                                    : 'Show grid borders'
                             }
                         </button>
 
@@ -87,8 +91,8 @@ const Settings = ({ showMenu, setShowMenu, functions, hover, showBorders, showTo
                         >
                             {
                                 showTooltips
-                                ? 'Hide tooltips'
-                                : 'Show tooltips'
+                                    ? 'Hide tooltips'
+                                    : 'Show tooltips'
                             }
                         </button>
                     </div>
@@ -98,4 +102,4 @@ const Settings = ({ showMenu, setShowMenu, functions, hover, showBorders, showTo
     );
 }
 
-export default Settings
+export default Settings;

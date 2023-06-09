@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import styles from './Tooltip.module.css';
+import './Tooltip.css';
 
 const Tooltip = ({ children, show, text, pos, dist, arrow }) => {
     const [display, setDisplay] = useState(false);
@@ -68,7 +68,7 @@ const Tooltip = ({ children, show, text, pos, dist, arrow }) => {
 
     return (
         <div
-            className={styles.container}
+            className='container'
             onMouseEnter={() => setDisplay(true)}
             onMouseLeave={() => setDisplay(false)}
         >
@@ -77,7 +77,7 @@ const Tooltip = ({ children, show, text, pos, dist, arrow }) => {
             <AnimatePresence>
                 {(display && showTooltip) && (
                     <motion.span
-                        className={styles.tooltip}
+                        className='tooltip'
                         style={positions[0]}
                         initial={{
                             opacity: 0,
@@ -99,14 +99,14 @@ const Tooltip = ({ children, show, text, pos, dist, arrow }) => {
                         {text}
 
                         <span
-                            className={styles.cursorConsistency}
+                            className='cursorConsistency'
                             style={positions[1]}
                         >
                         </span>
 
                         {showArrow && (
                             <span
-                                className={styles.arrow}
+                                className='arrow'
                                 style={positions[2]}
                             >
                             </span>
@@ -118,4 +118,4 @@ const Tooltip = ({ children, show, text, pos, dist, arrow }) => {
     );
 }
 
-export default Tooltip
+export default Tooltip;

@@ -1,25 +1,18 @@
-.menu {
+.actionMenu {
     display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: min(1.25vw, 0.75rem);
+    gap: 8px;
     border-radius: 100vw;
-    padding: min(0.75vw, 0.5rem);
     background-color: var(--background-secondary);
+    padding: 8px;
 }
 
-.entry {
-    position: relative;
-}
-
-.menuEntry {
-    position: relative;
+.actionItem {
     display: flex;
     align-items: center;
     justify-content: center;
     border-radius: 100%;
     background-color: var(--background-primary);
-    padding: min(1.25vw, 1.25rem);
+    padding: 16px;
     cursor: pointer;
     border: none;
 }
@@ -92,4 +85,16 @@
 .colorMenuButton > svg {
     width: 18px;
     height: 18px;
+}
+
+@media (max-width: 1000px) {
+    .actionMenu {
+        border-radius: 0;
+        justify-content: space-around;
+    }
+
+    .actionItem {
+        padding: 22px;
+        border-radius: 4px;
+    }
 }

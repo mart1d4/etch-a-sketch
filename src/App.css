@@ -1,0 +1,16 @@
+.menu {
+    position: fixed;
+    top: 24px;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+@media (max-width: 1000px) {
+    .menu {
+        bottom: 0;
+        top: unset;
+        transform: translateX(0);
+        left: 0;
+        width: 100vw;
+    }
+}
