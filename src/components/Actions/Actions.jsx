@@ -7,6 +7,7 @@ import './Actions.css';
 const Actions = ({ functions, color, size, dark }) => {
     const [displaySizeMenu, setDisplaySizeMenu] = useState(false);
     const [displayColorMenu, setDisplayColorMenu] = useState(false);
+    const [currentColor, setCurrentColor] = useState(color);
     const sizeMenu = useRef(null);
     const colorMenu = useRef(null);
     const sizeInput = useRef(null);
@@ -86,9 +87,15 @@ const Actions = ({ functions, color, size, dark }) => {
                             className='actionItem'
                             onClick={
                                 entry.name === 'Change Size'
-                                    ? () => setDisplaySizeMenu(!displaySizeMenu)
+                                    ? () => {
+                                        setDisplayColorMenu(false);
+                                        setDisplaySizeMenu(!displaySizeMenu);
+                                    }
                                     : entry.name === 'Change Color'
-                                        ? () => setDisplayColorMenu(!displayColorMenu)
+                                        ? () => {
+                                            setDisplaySizeMenu(false);
+                                            setDisplayColorMenu(!displayColorMenu);
+                                        }
                                         : entry.function
                             }
                         >
@@ -180,16 +187,31 @@ const Actions = ({ functions, color, size, dark }) => {
                                     ease: 'backInOut'
                                 }}
                             >
-                                <input
-                                    ref={colorInput}
-                                    type='color'
-                                    defaultValue={color}
-                                />
+                                <div className='colorContainer'>
+                                    <input
+                                        ref={colorInput}
+                                        type='color'
+                                        defaultValue={currentColor}
+                                        onChange={() => {
+                                            setCurrentColor(colorInput.current.value);
+                                        }}
+                                    />
+
+                                    <div
+                                        className='colorMenuDisplay'
+                                        style={{
+                                            backgroundColor: currentColor
+                                        }}
+                                        onClick={() => {
+                                            colorInput.current.click();
+                                        }}
+                                    />
+                                </div>
 
                                 <button
                                     className='colorMenuButton'
                                     onClick={() => {
-                                        functions.handleColorChange(colorInput.current.value);
+                                        functions.handleColorChange(currentColor);
                                         setDisplayColorMenu(false);
                                     }}
                                 >
