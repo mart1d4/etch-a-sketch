@@ -11,7 +11,7 @@
     "author": {
         "name": "mart1d4",
         "email": "contact@mart1d4.com",
-        "url": "https://www.mart1d4.com"
+        "url": "https://www.mart1d4.dev"
     },
     "license": "MIT",
     "description": "Etch a sketch, want to draw something?",
@@ -25,20 +25,20 @@
         "preview": "vite preview"
     },
     "dependencies": {
-        "framer-motion": "^10.12.16",
+        "framer-motion": "^10.16.4",
         "react": "^18.2.0",
         "react-dom": "^18.2.0"
     },
     "devDependencies": {
-        "@types/react": "^18.0.37",
-        "@types/react-dom": "^18.0.11",
-        "@typescript-eslint/eslint-plugin": "^5.59.0",
-        "@typescript-eslint/parser": "^5.59.0",
-        "@vitejs/plugin-react": "^4.0.0",
-        "eslint": "^8.38.0",
+        "@types/react": "^18.2.28",
+        "@types/react-dom": "^18.2.13",
+        "@typescript-eslint/eslint-plugin": "^6.7.5",
+        "@typescript-eslint/parser": "^6.7.5",
+        "@vitejs/plugin-react": "^4.1.0",
+        "eslint": "^8.51.0",
         "eslint-plugin-react-hooks": "^4.6.0",
-        "eslint-plugin-react-refresh": "^0.3.4",
-        "typescript": "^5.0.2",
-        "vite": "^4.3.9"
+        "eslint-plugin-react-refresh": "^0.4.3",
+        "typescript": "^5.2.2",
+        "vite": "^4.4.11"
     }
 }
